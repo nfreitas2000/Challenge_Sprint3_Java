@@ -1,6 +1,8 @@
 package org.example;
 
+import org.example.DAO.ImplementacaoPaciente;
 import org.example.DAO.ImplementacaoPessoa;
+import org.example.Model.Paciente;
 import org.example.Model.Pessoa;
 
 import java.util.Scanner;
@@ -11,14 +13,21 @@ public class Main {
     public static void main(String[] args) {
         /*INSTÂNCIAÇÃO DE OBJETOS DE CRUD*/
         ImplementacaoPessoa pessoaCRUD = new ImplementacaoPessoa();
+        ImplementacaoPaciente pacienteCRUD = new ImplementacaoPaciente();
+
 
 
         /*INSTÂNCIAÇÃO DE OBJETOS*/
         Scanner sc = new Scanner(System.in);
 
+        Pessoa p = new Pessoa();
+        Pessoa pessoaGenerica = new Pessoa("Eduardo", "12332112332","9999999999", "02/06/1997", "M", "solteiro", "Fundamental Completo");
+        Paciente pacienteGenerico = new Paciente();
+
         /*INSTANCIAÇÃO DE VARIÁVEIS*/
 
-        int escolha = 10;
+        int escolha = 0;
+        int inicioPaciente = 0;
 
         while (true){
             System.out.println("=====================================================");
@@ -32,7 +41,7 @@ public class Main {
             try {
                 escolha = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Valor inserido inválido!");;
+                System.out.println("Valor inserido inválido!");
             }
             switch (escolha){
                 case 0:
@@ -43,16 +52,27 @@ public class Main {
                     System.out.println("1 - Realizar Login");
                     System.out.println("2 - Realizar Cadastro");
                     System.out.println("=====================================================");
-                    System.out.println("Digite: ");
-                    int inicioPaciente = Integer.parseInt(sc.nextLine());
+                    System.out.print("Digite: ");
+                    try{
+                        inicioPaciente = Integer.parseInt(sc.nextLine());
+                    } catch (NumberFormatException e){
+                        System.out.println("Valor inserido inválido!");
+                    }
                     switch (inicioPaciente){
                         case 0:
                             break;
                         case 1:
+
+                            System.out.println(pessoaCRUD.recuperaId(pessoaGenerica));
+                            continue;
                         case 2:
-                            Pessoa p = new Pessoa();
+                            pessoaCRUD.recuperaId(pessoaGenerica);
+                            pessoaCRUD.recuperaId(pessoaGenerica);
                             p.cadastrarPessoa();
                             pessoaCRUD.inserirDados(p);
+                            p.setId_pessoa(pessoaCRUD.recuperaId(p));
+                            pacienteGenerico.cadastrarPaciente(p);
+                            pacienteCRUD.inserirDados(pacienteGenerico);
                             continue;
                         default:
                             System.out.println("=====================================================");

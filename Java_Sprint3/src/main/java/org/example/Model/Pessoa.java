@@ -5,6 +5,7 @@ import org.example.DAO.ImplementacaoPessoa;
 import java.util.Scanner;
 
 public class Pessoa {
+    private int id_pessoa;
     private String nome;
     private String cpf;
     private String rg;
@@ -16,6 +17,17 @@ public class Pessoa {
     /*CONSTRUTORES ============================================================*/
 
     public Pessoa(String nome, String cpf, String rg, String dt_nascimento, String sx_pessoa, String estado_civil, String escolaridade) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.dt_nascimento = dt_nascimento;
+        this.sx_pessoa = sx_pessoa;
+        this.estado_civil = estado_civil;
+        this.escolaridade = escolaridade;
+    }
+
+    public Pessoa(int id_pessoa, String nome, String cpf, String rg, String dt_nascimento, String sx_pessoa, String estado_civil, String escolaridade) {
+        this.id_pessoa = id_pessoa;
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
@@ -48,6 +60,14 @@ public class Pessoa {
 
     public String getRg() {
         return rg;
+    }
+
+    public int getId_pessoa() {
+        return id_pessoa;
+    }
+
+    public void setId_pessoa(int id_pessoa) {
+        this.id_pessoa = id_pessoa;
     }
 
     public void setRg(String rg) {
