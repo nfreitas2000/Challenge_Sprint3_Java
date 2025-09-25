@@ -2,17 +2,35 @@ package org.example.DAO;
 
 import org.example.Conexao.Conexao;
 import org.example.Model.Paciente;
+import org.example.Model.Pessoa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImplementacaoPaciente implements DAO<Paciente>{
     @Override
     public List<Paciente> recuperarDadosTodos() {
-        return List.of();
+        List<Paciente> l = new ArrayList<Paciente>();
+        String sql = "select * from T_HCFMUSP_PACIENTE";
+        try (
+                Connection con = Conexao.recuperaConexao();
+                PreparedStatement st = con.prepareStatement(sql);
+                ResultSet rs = st.executeQuery();
+
+        ) {
+            /*EU TENHO QUE RECUPERAR UMA PESSOA DO TIPO PESSOA*/
+            /*FAZER ISSO PEGANDO O ID DELA, CRIANDO UM METODO QUE RETORNE A PESSOA BASEADA NO ID*/
+            while(rs.next()) {
+                l.add(new Paciente(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return l;
     }
 
     @Override
@@ -41,12 +59,18 @@ public class ImplementacaoPaciente implements DAO<Paciente>{
     @Override
     public int recuperaId(Paciente o){
         int id = 0;
-        String sql = "select id_paciente from T_HCFMUSP_PACIENTE";
+        String sql = "select id_paciente from T_HCFMUSP_PACIENTE where id_pessoa = ?";
         try (
             Connection con = Conexao.recuperaConexao();
             PreparedStatement st = con.prepareStatement(sql);
         ) {
-            System.out.println("oi");
+            st.setInt(1, o.getPessoa().getId_pessoa());
+
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    id = rs.getInt("id_paciente");
+                }
+            };
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

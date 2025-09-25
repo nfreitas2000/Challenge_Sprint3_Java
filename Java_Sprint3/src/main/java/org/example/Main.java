@@ -67,15 +67,14 @@ public class Main {
                         case 2:
                             p.cadastrarPessoa();
                             System.out.println("=====================================================");
-                            pessoaCRUD.inserirDados(p);
+                            pessoaCRUD.inserirDados(p); /*ISSO PODE DAR ERRO -> SE OS DADOS NO ESTIVEREM CORRETOS, O BD VAI NEGAR A CRIAÇÃO, MAS O CÓDIGO CONTINUA DE QUALQUER JEITO*/
+                            /*PARA CORRIGIR, TRATAR OS DADOS NO CADASTRO DE PESSOA*/
                             System.out.println("=====================================================");
                             p.setId_pessoa(pessoaCRUD.recuperaId(p));
-                            pacienteGenerico.cadastrarPaciente(p);
+                            pacienteGenerico.cadastrarPaciente(p); /*OBS: DADOS DE TIPO SANGUINEO ESTÃO ERRADOS (NÃO ACEITAM + OU -)*/
                             System.out.println("=====================================================");
                             pacienteCRUD.inserirDados(pacienteGenerico);
                             System.out.println("=====================================================");
-
-
                             continue;
                         default:
                             System.out.println("=====================================================");
