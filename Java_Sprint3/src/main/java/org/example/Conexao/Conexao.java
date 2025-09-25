@@ -16,9 +16,8 @@ public class Conexao {
     public Conexao() {}
 
     public static Connection recuperaConexao() throws SQLException {
-        if (conexao == null) {
-            conexao = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL", user, password);
-        }
+        conexao = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL", user, password);
+
         return conexao;
     }
 }

@@ -63,16 +63,19 @@ public class Main {
                             break;
                         case 1:
 
-                            System.out.println(pessoaCRUD.recuperaId(pessoaGenerica));
                             continue;
                         case 2:
-                            pessoaCRUD.recuperaId(pessoaGenerica);
-                            pessoaCRUD.recuperaId(pessoaGenerica);
                             p.cadastrarPessoa();
+                            System.out.println("=====================================================");
                             pessoaCRUD.inserirDados(p);
+                            System.out.println("=====================================================");
                             p.setId_pessoa(pessoaCRUD.recuperaId(p));
                             pacienteGenerico.cadastrarPaciente(p);
+                            System.out.println("=====================================================");
                             pacienteCRUD.inserirDados(pacienteGenerico);
+                            System.out.println("=====================================================");
+
+
                             continue;
                         default:
                             System.out.println("=====================================================");

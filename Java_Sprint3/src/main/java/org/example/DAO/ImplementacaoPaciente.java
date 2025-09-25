@@ -29,7 +29,7 @@ public class ImplementacaoPaciente implements DAO<Paciente>{
             st.setInt(5, p.getPessoa().getId_pessoa());
             int linhasAfetadas = st.executeUpdate();
             if (linhasAfetadas > 0) {
-                System.out.println("Cadastro de pessoa realizado com sucesso!");
+                System.out.println("Cadastro de paciente realizado com sucesso!");
             } else {
                 System.out.println("Ocorreu um erro! Tente Novamente!");
             }
