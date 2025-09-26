@@ -1,7 +1,9 @@
 package org.example;
 
+import org.example.DAO.ImplementacaoContaPaciente;
 import org.example.DAO.ImplementacaoPaciente;
 import org.example.DAO.ImplementacaoPessoa;
+import org.example.Model.ContaPaciente;
 import org.example.Model.Paciente;
 import org.example.Model.Pessoa;
 
@@ -11,18 +13,16 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        /*INSTÂNCIAÇÃO DE OBJETOS DE CRUD*/
-        ImplementacaoPessoa pessoaCRUD = new ImplementacaoPessoa();
-        ImplementacaoPaciente pacienteCRUD = new ImplementacaoPaciente();
+        /*TESTES*/
+
 
 
 
         /*INSTÂNCIAÇÃO DE OBJETOS*/
         Scanner sc = new Scanner(System.in);
 
-        Pessoa p = new Pessoa();
-        Pessoa pessoaGenerica = new Pessoa("Eduardo", "12332112332","9999999999", "02/06/1997", "M", "solteiro", "Fundamental Completo");
-        Paciente pacienteGenerico = new Paciente();
+        ContaPaciente contaP = new ContaPaciente();
+
 
         /*INSTANCIAÇÃO DE VARIÁVEIS*/
 
@@ -62,19 +62,9 @@ public class Main {
                         case 0:
                             break;
                         case 1:
-
                             continue;
                         case 2:
-                            p.cadastrarPessoa();
-                            System.out.println("=====================================================");
-                            pessoaCRUD.inserirDados(p); /*ISSO PODE DAR ERRO -> SE OS DADOS NO ESTIVEREM CORRETOS, O BD VAI NEGAR A CRIAÇÃO, MAS O CÓDIGO CONTINUA DE QUALQUER JEITO*/
-                            /*PARA CORRIGIR, TRATAR OS DADOS NO CADASTRO DE PESSOA*/
-                            System.out.println("=====================================================");
-                            p.setId_pessoa(pessoaCRUD.recuperaId(p));
-                            pacienteGenerico.cadastrarPaciente(p); /*OBS: DADOS DE TIPO SANGUINEO ESTÃO ERRADOS (NÃO ACEITAM + OU -)*/
-                            System.out.println("=====================================================");
-                            pacienteCRUD.inserirDados(pacienteGenerico);
-                            System.out.println("=====================================================");
+                            contaP.criarContaCompleta();
                             continue;
                         default:
                             System.out.println("=====================================================");

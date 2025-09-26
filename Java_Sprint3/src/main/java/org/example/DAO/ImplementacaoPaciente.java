@@ -22,10 +22,16 @@ public class ImplementacaoPaciente implements DAO<Paciente>{
                 ResultSet rs = st.executeQuery();
 
         ) {
-            /*EU TENHO QUE RECUPERAR UMA PESSOA DO TIPO PESSOA*/
-            /*FAZER ISSO PEGANDO O ID DELA, CRIANDO UM METODO QUE RETORNE A PESSOA BASEADA NO ID*/
+            ImplementacaoPessoa p = new ImplementacaoPessoa();
+
+            List<Pessoa> pessoas = p.recuperarDadosTodos();
+
             while(rs.next()) {
-                l.add(new Paciente(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                for (Pessoa pessoa : pessoas){
+                    if (pessoa.getId_pessoa() == rs.getInt(6)){
+                        l.add(new Paciente(rs.getInt(1), pessoa, rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5)));
+                    }
+                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

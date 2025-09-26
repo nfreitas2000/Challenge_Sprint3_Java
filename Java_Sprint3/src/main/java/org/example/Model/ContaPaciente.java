@@ -1,5 +1,11 @@
 package org.example.Model;
 
+import org.example.DAO.ImplementacaoContaPaciente;
+import org.example.DAO.ImplementacaoPaciente;
+import org.example.DAO.ImplementacaoPessoa;
+
+import java.util.Scanner;
+
 public class ContaPaciente {
     int id_conta;
     Paciente paciente;
@@ -54,5 +60,42 @@ public class ContaPaciente {
         this.senha = senha;
     }
 
+    /*METODOS*/
 
+    public void cadastrarConta(Paciente paciente){
+        Scanner sc = new Scanner(System.in);
+        setPaciente(paciente);
+        System.out.println("Digite o seu novo usuário: ");
+        setNm_paciente(sc.nextLine());
+        System.out.println("Digite a senha para sua conta: ");
+        setSenha(sc.nextLine());
+    }
+
+    public void criarContaCompleta(){
+        /*INSTÂNCIAÇÃO DE OBJETOS DE CRUD*/
+        ImplementacaoPessoa pessoaCRUD = new ImplementacaoPessoa();
+        ImplementacaoPaciente pacienteCRUD = new ImplementacaoPaciente();
+        ImplementacaoContaPaciente contaCRUD = new ImplementacaoContaPaciente();
+
+        /*INSTÂNCIAÇÃO DE OBJETOS DE GENÉRICOS PARA PREENCHIMENTO*/
+        Pessoa p = new Pessoa();
+        Paciente paciente = new Paciente();
+
+
+        /*SEQUENCIA DE MÉTODOS PARA PREENCHIMENTO DE TABELAS NO BD (tables de pessoa, paciente e conta de paciente)*/
+        p.cadastrarPessoa();
+        System.out.println("=====================================================");
+        pessoaCRUD.inserirDados(p); /*ISSO PODE DAR ERRO -> SE OS DADOS NO ESTIVEREM CORRETOS, O BD VAI NEGAR A CRIAÇÃO, MAS O CÓDIGO CONTINUA DE QUALQUER JEITO*/
+        /*PARA CORRIGIR, TRATAR OS DADOS NO CADASTRO DE PESSOA*/
+        System.out.println("=====================================================");
+        p.setId_pessoa(pessoaCRUD.recuperaId(p));
+        paciente.cadastrarPaciente(p); /*OBS: DADOS DE TIPO SANGUINEO ESTÃO ERRADOS (NÃO ACEITAM + OU -)*/
+        System.out.println("=====================================================");
+        pacienteCRUD.inserirDados(paciente);
+        paciente.setId_paciente(pacienteCRUD.recuperaId(paciente));
+        System.out.println("=====================================================");
+        cadastrarConta(paciente);
+        contaCRUD.inserirDados(this);
+
+    }
 }
