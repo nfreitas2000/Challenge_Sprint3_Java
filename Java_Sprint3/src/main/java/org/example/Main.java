@@ -13,12 +13,15 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        /*TESTES*/
+        /*INSTANCIA DE OBJETOS DE CRUD*/
+
+        ImplementacaoContaPaciente contaCRUD = new ImplementacaoContaPaciente();
 
 
 
 
         /*INSTÂNCIAÇÃO DE OBJETOS*/
+
         Scanner sc = new Scanner(System.in);
 
         ContaPaciente contaP = new ContaPaciente();
@@ -57,11 +60,21 @@ public class Main {
                         inicioPaciente = Integer.parseInt(sc.nextLine());
                     } catch (NumberFormatException e){
                         System.out.println("Valor inserido inválido!");
+                        continue;
                     }
                     switch (inicioPaciente){
                         case 0:
                             break;
                         case 1:
+                            System.out.println("Digite o usuário: ");
+                            String user = sc.nextLine();
+                            System.out.println("Digite a senha: ");
+                            String password = sc.nextLine();
+                            if (contaP.realizarLogin(contaCRUD.recuperarLogin(user, password))){
+                                System.out.println("Acesso liberado!");
+                            } else {
+                                System.out.println("Acesso negado!");
+                            }
                             continue;
                         case 2:
                             contaP.criarContaCompleta();

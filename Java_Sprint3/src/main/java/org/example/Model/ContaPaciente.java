@@ -71,6 +71,14 @@ public class ContaPaciente {
         setSenha(sc.nextLine());
     }
 
+    public boolean realizarLogin(ContaPaciente contaPaciente){
+        if (contaPaciente.getId_conta() == 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void criarContaCompleta(){
         /*INSTÂNCIAÇÃO DE OBJETOS DE CRUD*/
         ImplementacaoPessoa pessoaCRUD = new ImplementacaoPessoa();

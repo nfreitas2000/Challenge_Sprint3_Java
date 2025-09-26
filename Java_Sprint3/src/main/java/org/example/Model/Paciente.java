@@ -27,6 +27,7 @@ public class Paciente{
         this.altura = altura;
         this.peso = peso;
     }
+    
 
     public Paciente() {
     }
