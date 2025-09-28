@@ -1,8 +1,8 @@
 package org.example.DAO;
 
 import org.example.Conexao.Conexao;
-import org.example.Model.ContaPaciente;
-import org.example.Model.Paciente;
+import org.example.Model.Paciente.ContaPaciente;
+import org.example.Model.Paciente.Paciente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,8 +1,9 @@
-package org.example.Model;
+package org.example.Model.Paciente;
 
 import org.example.DAO.ImplementacaoContaPaciente;
 import org.example.DAO.ImplementacaoPaciente;
 import org.example.DAO.ImplementacaoPessoa;
+import org.example.Model.Pessoa;
 
 import java.util.Scanner;
 

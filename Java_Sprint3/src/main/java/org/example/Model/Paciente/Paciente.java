@@ -1,6 +1,7 @@
-package org.example.Model;
+package org.example.Model.Paciente;
 
-import javax.swing.*;
+import org.example.Model.Pessoa;
+
 import java.util.Scanner;
 
 public class Paciente{
