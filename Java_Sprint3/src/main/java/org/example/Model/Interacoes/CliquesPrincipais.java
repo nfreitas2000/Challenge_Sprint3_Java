@@ -1,8 +1,15 @@
 package org.example.Model.Interacoes;
 
+import org.example.DAO.ImplementacaoCliquesLogin;
+import org.example.DAO.ImplementacaoCliquesManuais;
+import org.example.DAO.ImplementacaoCliquesPrincipais;
+import org.example.DAO.ImplementacaoSessao;
 import org.example.Model.Paciente.Sessao;
 
+import java.sql.SQLException;
+
 public class CliquesPrincipais {
+    private int idCliquesPrincipais;
     private int cliquesLogin = 0;
     private int cliquesConsultas = 0;
     private int cliquesAgendamentos = 0;
@@ -17,6 +24,25 @@ public class CliquesPrincipais {
     public CliquesPrincipais(Sessao sessao, CliquesLogin login) {
         this.sessao = sessao;
         this.login = login;
+    }
+
+    public CliquesPrincipais(int idCliquesPrincipais, int cliquesLogin, int cliquesConsultas, int cliquesAgendamentos, int cliquesManuais, int cliquesOutros, CliquesLogin login, Sessao sessao) {
+        this.idCliquesPrincipais = idCliquesPrincipais;
+        this.cliquesLogin = cliquesLogin;
+        this.cliquesConsultas = cliquesConsultas;
+        this.cliquesAgendamentos = cliquesAgendamentos;
+        this.cliquesManuais = cliquesManuais;
+        this.cliquesOutros = cliquesOutros;
+        this.login = login;
+        this.sessao = sessao;
+    }
+
+    public int getIdCliquesPrincipais() {
+        return idCliquesPrincipais;
+    }
+
+    public void setIdCliquesPrincipais(int idCliquesPrincipais) {
+        this.idCliquesPrincipais = idCliquesPrincipais;
     }
 
     public int getCliquesLogin() {
@@ -73,5 +99,24 @@ public class CliquesPrincipais {
 
     public void setSessao(Sessao sessao) {
         this.sessao = sessao;
+    }
+
+    public void salvarInteracoes(CliquesManuais manuais, CliquesLogin login, CliquesPrincipais principais, Sessao sessao) throws SQLException {
+        ImplementacaoCliquesLogin cliquesLoginCRUD = new ImplementacaoCliquesLogin();
+        ImplementacaoCliquesManuais cliquesManuaisCRUD = new ImplementacaoCliquesManuais();
+        ImplementacaoCliquesPrincipais cliquesPrincipaisCRUD = new ImplementacaoCliquesPrincipais();
+
+        ImplementacaoSessao sessaoCRUD = new ImplementacaoSessao();
+        sessaoCRUD.inserirDados(sessao);
+
+        cliquesManuaisCRUD.inserirDados(manuais);
+        manuais.setIdCliquesManuais(cliquesManuaisCRUD.recuperaId(manuais));
+        login.setManuais(manuais);
+        cliquesLoginCRUD.inserirDados(login);
+        login.setIdCliquesLogin(cliquesLoginCRUD.recuperaId(login));
+        principais.setLogin(login);
+        sessao.setId_sessao(sessaoCRUD.recuperaId(sessao));
+        principais.setSessao(sessao);
+        cliquesPrincipaisCRUD.inserirDados(principais);
     }
 }

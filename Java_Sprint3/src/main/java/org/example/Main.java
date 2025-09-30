@@ -1,10 +1,8 @@
 package org.example;
 
-import org.example.DAO.ImplementacaoContaFuncionario;
-import org.example.DAO.ImplementacaoContaPaciente;
-import org.example.DAO.ImplementacaoSessao;
-import org.example.DAO.ImplementacaoTeleatendimento;
+import org.example.DAO.*;
 import org.example.Model.Funcionario.ContaFuncionario;
+import org.example.Model.Funcionario.DashBoard;
 import org.example.Model.Funcionario.GerenciarPacientes;
 import org.example.Model.Interacoes.CliquesLogin;
 import org.example.Model.Interacoes.CliquesManuais;
@@ -13,6 +11,7 @@ import org.example.Model.Paciente.ContaPaciente;
 import org.example.Model.Paciente.Sessao;
 import org.example.Model.Paciente.Teleconsulta;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -81,11 +80,14 @@ public class Main {
                                 contaP = contaPCRUD.recuperarLogin(user, password);
 
                                 System.out.println("Acesso liberado!");
-                                ImplementacaoSessao sessaoCRUD = new ImplementacaoSessao();
+
+
                                 Sessao sessao = new Sessao(contaP);
+
                                 CliquesManuais cliquesManuais = new CliquesManuais();
-                                CliquesLogin cliquesLogin = new CliquesLogin(cliquesManuais);
-                                CliquesPrincipais cliquesPrincipais = new CliquesPrincipais(sessao, cliquesLogin);
+                                CliquesLogin cliquesLogin = new CliquesLogin();
+                                CliquesPrincipais cliquesPrincipais = new CliquesPrincipais();
+
                                 while (true) {
                                     System.out.println("=====================================================");
                                     System.out.println("Seja bem-vindo(a), " + contaP.getNm_paciente() + "!");
@@ -100,7 +102,7 @@ public class Main {
                                     try {
                                         switch (Integer.parseInt(sc.nextLine())) {
                                             case 0:
-                                                sessaoCRUD.inserirDados(sessao);
+                                                cliquesPrincipais.salvarInteracoes(cliquesManuais, cliquesLogin, cliquesPrincipais, sessao);
                                                 break;
                                             case 1:
                                                 Teleconsulta teleconsulta = new Teleconsulta();
@@ -135,7 +137,6 @@ public class Main {
                                                                 while (true) {
                                                                     System.out.println("=====================================================");
                                                                     System.out.println("Quais problemas de login");
-                                                                    System.out.println("O que deseja fazer?");
                                                                     System.out.println("0 - Voltar");
                                                                     System.out.println("1 - Cadastro");
                                                                     System.out.println("2 - Atualizar dados");
@@ -147,9 +148,15 @@ public class Main {
                                                                                 break;
                                                                             case 1:
                                                                                 cliquesLogin.setCliquesCadastro(cliquesLogin.getCliquesCadastro() + 1);
+                                                                                System.out.println("=====================================================");
+                                                                                System.out.println("Para criar sua conta, acesse o Portal do Paciente e siga o passo a passo. Caso tenha dificuldade, procure a equipe de suporte para ajudar no processo.");
+                                                                                System.out.println("=====================================================");
                                                                                 continue;
                                                                             case 2:
                                                                                 cliquesLogin.setCliquesAtualizarDados(cliquesLogin.getCliquesAtualizarDados() + 1);
+                                                                                System.out.println("=====================================================");
+                                                                                System.out.println("Para realizar alterações nos dados inseridos, entre em contato com um profissional.");
+                                                                                System.out.println("=====================================================");
                                                                                 continue;
                                                                             default:
                                                                                 System.out.println("Entrada Inválida!");
@@ -163,8 +170,16 @@ public class Main {
                                                                 }
                                                             case 2:
                                                                 cliquesPrincipais.setCliquesConsultas(cliquesPrincipais.getCliquesConsultas() + 1);
+                                                                System.out.println("=====================================================");
+                                                                System.out.println("Aqui você pode verificar como visualizar consultas anteriores, próximas consultas ou remarcar.");
+                                                                System.out.println("=====================================================");
+                                                                continue;
                                                             case 3:
                                                                 cliquesPrincipais.setCliquesAgendamentos(cliquesPrincipais.getCliquesAgendamentos() + 1);
+                                                                System.out.println("=====================================================");
+                                                                System.out.println("Aqui você pode verificar como realizar o agemdamento de uma nova consulta.");
+                                                                System.out.println("=====================================================");
+                                                                continue;
                                                             case 4:
                                                                 cliquesPrincipais.setCliquesManuais(cliquesPrincipais.getCliquesManuais() + 1);
                                                                 while (true) {
@@ -174,7 +189,7 @@ public class Main {
                                                                     System.out.println("0 - Voltar");
                                                                     System.out.println("1 - Portal do paciente");
                                                                     System.out.println("2 - Teleconsulta");
-                                                                    System.out.println("2 - Privacidade");
+                                                                    System.out.println("3 - Privacidade");
                                                                     System.out.println("=====================================================");
                                                                     System.out.print("Digite: ");
                                                                     try {
@@ -183,14 +198,21 @@ public class Main {
                                                                                 break;
                                                                             case 1:
                                                                                 cliquesManuais.setCliquesPortalPaciente(cliquesManuais.getCliquesPortalPaciente() + 1);
+                                                                                System.out.println("=====================================================");
+                                                                                System.out.println("Manual do Portal do Paciente: passo a passo para acessar o sistema, visualizar consultas e atualizar informações.");
+                                                                                System.out.println("=====================================================");
                                                                                 continue;
-
                                                                             case 2:
                                                                                 cliquesManuais.setCliquesGuiaTeleconsulta(cliquesManuais.getCliquesGuiaTeleconsulta() + 1);
+                                                                                System.out.println("=====================================================");
+                                                                                System.out.println("Manual da Teleconsulta: guia simples para entrar na consulta online e testar áudio e vídeo.");
+                                                                                System.out.println("=====================================================");
                                                                                 continue;
-
                                                                             case 3:
                                                                                 cliquesManuais.setCliquesPrivacidade(cliquesManuais.getCliquesPrivacidade() + 1);
+                                                                                System.out.println("=====================================================");
+                                                                                System.out.println("Manual de Privacidade: como seus dados são utilizados e como garantir um acesso seguro.");
+                                                                                System.out.println("=====================================================");
                                                                                 continue;
                                                                         }
                                                                     } catch (NumberFormatException e){
@@ -198,9 +220,13 @@ public class Main {
                                                                         continue;
                                                                     }
                                                                     break;
-                                                                }
+                                                                } continue;
                                                             case 5:
                                                                 cliquesPrincipais.setCliquesOutros(cliquesPrincipais.getCliquesOutros() + 1);
+                                                                System.out.println("=====================================================");
+                                                                System.out.println("Aqui você encontra dúvidas frequentes, pode enviar sugestões ou falar com um atendente.");
+                                                                System.out.println("=====================================================");
+                                                                continue;
                                                         }
                                                     } catch (NumberFormatException e){
                                                         System.out.println("Entrada inválida!");
@@ -208,10 +234,13 @@ public class Main {
                                                     }
                                                     break;
                                                 }
+                                                continue;
                                         }
                                     } catch (NumberFormatException e) {
                                         System.out.println("Entrada inválida");
                                         continue;
+                                    } catch (SQLException e) {
+                                        throw new RuntimeException(e);
                                     }
                                     break;
                                 }continue;
@@ -294,6 +323,8 @@ public class Main {
                                                     }break;
                                                 }
                                             case 2:
+                                                DashBoard dashBoard = new DashBoard();
+                                                dashBoard.exibirDados();
                                                 continue;
                                         }
                                     } catch (NumberFormatException e) {
@@ -317,7 +348,7 @@ public class Main {
                     System.out.println("=====================================================");
                     System.out.println("Item não reconhecido. Tente novamente.");
                     continue;
-            }
+            }break;
 
         }
     }
