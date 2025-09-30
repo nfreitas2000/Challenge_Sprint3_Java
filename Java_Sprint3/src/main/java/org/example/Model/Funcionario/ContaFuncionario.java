@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ContaFuncionario {
-    int id_conta_funcionario;
-    Funcionario funcionario;
-    String user_funcionario;
-    String senha_funcionario;
+    private int id_conta_funcionario;
+    private Funcionario funcionario;
+    private String user_funcionario;
+    private String senha_funcionario;
 
     public ContaFuncionario(int id_conta_funcionario, Funcionario funcionario, String user_funcionario, String senha_funcionario) {
         this.id_conta_funcionario = id_conta_funcionario;

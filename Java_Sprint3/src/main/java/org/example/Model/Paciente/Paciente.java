@@ -5,12 +5,12 @@ import org.example.Model.Pessoa;
 import java.util.Scanner;
 
 public class Paciente{
-    int id_paciente;
-    Pessoa pessoa;
-    String historicoMedico;
-    String grupoSanguineo;
-    double altura;
-    double peso;
+    private int id_paciente;
+    private Pessoa pessoa;
+    private String historicoMedico;
+    private String grupoSanguineo;
+    private double altura;
+    private double peso;
 
     public Paciente(Pessoa pessoa, String historicoMedico, String grupoSanguineo, double altura, double peso) {
         this.pessoa = pessoa;

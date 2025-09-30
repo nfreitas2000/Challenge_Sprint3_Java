@@ -5,14 +5,15 @@ import org.example.Model.Pessoa;
 import java.util.Scanner;
 
 public class Funcionario {
-    int id_funcionario;
-    Pessoa pessoa;
-    String setor;
-    String cargo;
-    String st_credencial;
+    private int id_funcionario;
+    private Pessoa pessoa;
+    private String setor;
+    private String cargo;
+    private String st_credencial;
 
     public Funcionario(int id_funcionario, Pessoa pessoa,String setor, String cargo, String st_credencial) {
         this.id_funcionario = id_funcionario;
+        this.pessoa = pessoa;
         this.setor = setor;
         this.cargo = cargo;
         this.st_credencial = st_credencial;

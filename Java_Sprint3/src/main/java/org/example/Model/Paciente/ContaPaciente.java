@@ -8,10 +8,10 @@ import org.example.Model.Pessoa;
 import java.util.Scanner;
 
 public class ContaPaciente {
-    int id_conta;
-    Paciente paciente;
-    String nm_paciente;
-    String senha;
+    private int id_conta;
+    private Paciente paciente;
+    private String nm_paciente;
+    private String senha;
 
     public ContaPaciente(int id_conta, Paciente paciente, String nm_paciente, String senha) {
         this.id_conta = id_conta;

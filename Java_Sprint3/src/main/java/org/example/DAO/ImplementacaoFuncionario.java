@@ -28,7 +28,8 @@ public class ImplementacaoFuncionario implements DAO<Funcionario>{
             while(rs.next()) {
                 for (Pessoa pessoa : pessoas){
                     if (pessoa.getId_pessoa() == rs.getInt(5)){
-                        l.add(new Funcionario(rs.getInt(1), pessoa, rs.getString(2), rs.getString(3), rs.getString(4)));
+                        Pessoa pessoa1 = new Pessoa(pessoa.getId_pessoa(), pessoa.getNome(), pessoa.getCpf(), pessoa.getRg(), pessoa.getDt_nascimento(), pessoa.getSx_pessoa(), pessoa.getEstado_civil(), pessoa.getEscolaridade());
+                        l.add(new Funcionario(rs.getInt(1), pessoa1, rs.getString(2), rs.getString(3), rs.getString(4)));
                     }
                 }
             }

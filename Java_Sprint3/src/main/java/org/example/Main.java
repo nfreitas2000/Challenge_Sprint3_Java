@@ -2,9 +2,16 @@ package org.example;
 
 import org.example.DAO.ImplementacaoContaFuncionario;
 import org.example.DAO.ImplementacaoContaPaciente;
+import org.example.DAO.ImplementacaoSessao;
+import org.example.DAO.ImplementacaoTeleatendimento;
 import org.example.Model.Funcionario.ContaFuncionario;
 import org.example.Model.Funcionario.GerenciarPacientes;
+import org.example.Model.Interacoes.CliquesLogin;
+import org.example.Model.Interacoes.CliquesManuais;
+import org.example.Model.Interacoes.CliquesPrincipais;
 import org.example.Model.Paciente.ContaPaciente;
+import org.example.Model.Paciente.Sessao;
+import org.example.Model.Paciente.Teleconsulta;
 
 import java.util.Scanner;
 
@@ -71,7 +78,143 @@ public class Main {
                             System.out.println("Digite a senha: ");
                             String password = sc.nextLine();
                             if (contaP.realizarLogin(contaPCRUD.recuperarLogin(user, password))){
+                                contaP = contaPCRUD.recuperarLogin(user, password);
+
                                 System.out.println("Acesso liberado!");
+                                ImplementacaoSessao sessaoCRUD = new ImplementacaoSessao();
+                                Sessao sessao = new Sessao(contaP);
+                                CliquesManuais cliquesManuais = new CliquesManuais();
+                                CliquesLogin cliquesLogin = new CliquesLogin(cliquesManuais);
+                                CliquesPrincipais cliquesPrincipais = new CliquesPrincipais(sessao, cliquesLogin);
+                                while (true) {
+                                    System.out.println("=====================================================");
+                                    System.out.println("Seja bem-vindo(a), " + contaP.getNm_paciente() + "!");
+                                    System.out.println("O que deseja fazer?");
+                                    System.out.println("0 - Voltar");
+                                    System.out.println("1 - Agendar teleconsulta");
+                                    System.out.println("2 - Ver consultas");
+                                    System.out.println("3 - Exibir resultados");
+                                    System.out.println("4 - Preciso de ajuda");
+                                    System.out.println("=====================================================");
+                                    System.out.print("Digite: ");
+                                    try {
+                                        switch (Integer.parseInt(sc.nextLine())) {
+                                            case 0:
+                                                sessaoCRUD.inserirDados(sessao);
+                                                break;
+                                            case 1:
+                                                Teleconsulta teleconsulta = new Teleconsulta();
+                                                teleconsulta.cadastrarTeleatendimento(contaP);
+                                                continue;
+                                            case 2:
+                                                Teleconsulta teleconsulta1 = new Teleconsulta();
+                                                teleconsulta1.exibirTeleconsultas(contaP);
+                                                continue;
+                                            case 3:
+                                                System.out.println("Não há resultados disponiveis.");
+                                                continue;
+                                            case 4:
+                                                while (true) {
+                                                    System.out.println("=====================================================");
+                                                    System.out.println("Com o que você precisa de ajuda?");
+                                                    System.out.println("O que deseja fazer?");
+                                                    System.out.println("0 - Voltar");
+                                                    System.out.println("1 - Login");
+                                                    System.out.println("2 - Consultas");
+                                                    System.out.println("3 - Agendamento");
+                                                    System.out.println("4 - Manuais");
+                                                    System.out.println("5 - Outros");
+                                                    System.out.println("=====================================================");
+                                                    System.out.print("Digite: ");
+                                                    try {
+                                                        switch (Integer.parseInt(sc.nextLine())) {
+                                                            case 0:
+                                                                break;
+                                                            case 1:
+                                                                cliquesPrincipais.setCliquesLogin(cliquesPrincipais.getCliquesLogin() + 1);
+                                                                while (true) {
+                                                                    System.out.println("=====================================================");
+                                                                    System.out.println("Quais problemas de login");
+                                                                    System.out.println("O que deseja fazer?");
+                                                                    System.out.println("0 - Voltar");
+                                                                    System.out.println("1 - Cadastro");
+                                                                    System.out.println("2 - Atualizar dados");
+                                                                    System.out.println("=====================================================");
+                                                                    System.out.print("Digite: ");
+                                                                    try {
+                                                                        switch (Integer.parseInt(sc.nextLine())) {
+                                                                            case 0:
+                                                                                break;
+                                                                            case 1:
+                                                                                cliquesLogin.setCliquesCadastro(cliquesLogin.getCliquesCadastro() + 1);
+                                                                                continue;
+                                                                            case 2:
+                                                                                cliquesLogin.setCliquesAtualizarDados(cliquesLogin.getCliquesAtualizarDados() + 1);
+                                                                                continue;
+                                                                            default:
+                                                                                System.out.println("Entrada Inválida!");
+                                                                                continue;
+                                                                        }
+                                                                    } catch (NumberFormatException e){
+                                                                        System.out.println("Entrada inválida!");
+                                                                        continue;
+                                                                    }
+                                                                    break;
+                                                                }
+                                                            case 2:
+                                                                cliquesPrincipais.setCliquesConsultas(cliquesPrincipais.getCliquesConsultas() + 1);
+                                                            case 3:
+                                                                cliquesPrincipais.setCliquesAgendamentos(cliquesPrincipais.getCliquesAgendamentos() + 1);
+                                                            case 4:
+                                                                cliquesPrincipais.setCliquesManuais(cliquesPrincipais.getCliquesManuais() + 1);
+                                                                while (true) {
+                                                                    System.out.println("=====================================================");
+                                                                    System.out.println("Esses são os manuais disponiveis:");
+                                                                    System.out.println("O que deseja fazer?");
+                                                                    System.out.println("0 - Voltar");
+                                                                    System.out.println("1 - Portal do paciente");
+                                                                    System.out.println("2 - Teleconsulta");
+                                                                    System.out.println("2 - Privacidade");
+                                                                    System.out.println("=====================================================");
+                                                                    System.out.print("Digite: ");
+                                                                    try {
+                                                                        switch (Integer.parseInt(sc.nextLine())) {
+                                                                            case 0:
+                                                                                break;
+                                                                            case 1:
+                                                                                cliquesManuais.setCliquesPortalPaciente(cliquesManuais.getCliquesPortalPaciente() + 1);
+                                                                                continue;
+
+                                                                            case 2:
+                                                                                cliquesManuais.setCliquesGuiaTeleconsulta(cliquesManuais.getCliquesGuiaTeleconsulta() + 1);
+                                                                                continue;
+
+                                                                            case 3:
+                                                                                cliquesManuais.setCliquesPrivacidade(cliquesManuais.getCliquesPrivacidade() + 1);
+                                                                                continue;
+                                                                        }
+                                                                    } catch (NumberFormatException e){
+                                                                        System.out.println("Entrada inválida!");
+                                                                        continue;
+                                                                    }
+                                                                    break;
+                                                                }
+                                                            case 5:
+                                                                cliquesPrincipais.setCliquesOutros(cliquesPrincipais.getCliquesOutros() + 1);
+                                                        }
+                                                    } catch (NumberFormatException e){
+                                                        System.out.println("Entrada inválida!");
+                                                        continue;
+                                                    }
+                                                    break;
+                                                }
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Entrada inválida");
+                                        continue;
+                                    }
+                                    break;
+                                }continue;
                             } else {
                                 System.out.println("Acesso negado!");
                             }
