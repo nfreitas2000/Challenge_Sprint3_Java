@@ -94,8 +94,53 @@ public class Paciente{
                 setAltura(Float.parseFloat(sc.nextLine()));
                 System.out.print("Qual seu peso: ");
                 setPeso(Float.parseFloat(sc.nextLine()));
-                System.out.print("Qual o seu tipo sanguineo*: ");
-                setGrupoSanguineo(sc.nextLine());
+                while (true) {
+                    System.out.println("Selecione seu tipo sanguíneo: ");
+                    System.out.println("1 - A+");
+                    System.out.println("2 - A-");
+                    System.out.println("3 - B+");
+                    System.out.println("4 - B-");
+                    System.out.println("5 - AB+");
+                    System.out.println("6 - AB-");
+                    System.out.println("7 - O+");
+                    System.out.println("8 - O-");
+                    System.out.print("Digite: ");
+                    try {
+                        ;
+                        switch (Integer.parseInt(sc.nextLine())) {
+                            case 1:
+                                setGrupoSanguineo("A+");
+                                break;
+                            case 2:
+                                setGrupoSanguineo("A-");
+                                break;
+                            case 3:
+                                setGrupoSanguineo("B+");
+                                break;
+                            case 4:
+                                setGrupoSanguineo("B-");
+                                break;
+                            case 5:
+                                setGrupoSanguineo("AB+");
+                                break;
+                            case 6:
+                                setGrupoSanguineo("AB-");
+                                break;
+                            case 7:
+                                setGrupoSanguineo("O+");
+                                break;
+                            case 8:
+                                setGrupoSanguineo("O-");
+                                break;
+                            default:
+                                System.out.println("Entrada inválida!");
+                                continue;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Entrada inválida! Digite apenas números.");
+                    }
+                    break;
+                }
                 System.out.print("Possui algum diagnostico médico que deve ser considerado (y/n): ");
                 diagnostico = sc.nextLine().strip().toLowerCase();
                 break;

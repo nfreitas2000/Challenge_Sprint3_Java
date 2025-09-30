@@ -94,11 +94,10 @@ public class ContaPaciente {
         /*SEQUENCIA DE MÉTODOS PARA PREENCHIMENTO DE TABELAS NO BD (tables de pessoa, paciente e conta de paciente)*/
         p.cadastrarPessoa();
         System.out.println("=====================================================");
-        pessoaCRUD.inserirDados(p); /*ISSO PODE DAR ERRO -> SE OS DADOS NO ESTIVEREM CORRETOS, O BD VAI NEGAR A CRIAÇÃO, MAS O CÓDIGO CONTINUA DE QUALQUER JEITO*/
-        /*PARA CORRIGIR, TRATAR OS DADOS NO CADASTRO DE PESSOA*/
+        pessoaCRUD.inserirDados(p);
         System.out.println("=====================================================");
         p.setId_pessoa(pessoaCRUD.recuperaId(p));
-        paciente.cadastrarPaciente(p); /*OBS: DADOS DE TIPO SANGUINEO ESTÃO ERRADOS (NÃO ACEITAM + OU -)*/
+        paciente.cadastrarPaciente(p);
         System.out.println("=====================================================");
         pacienteCRUD.inserirDados(paciente);
         paciente.setId_paciente(pacienteCRUD.recuperaId(paciente));

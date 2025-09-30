@@ -7,5 +7,7 @@ public interface DAO<O>{
     List<O> recuperarDadosTodos();
     void inserirDados(O o);
     int recuperaId(O o) throws SQLException;
+    void removerDados(O o);
+    void atualizarDados(O o, String coluna, String dado);
 
 }

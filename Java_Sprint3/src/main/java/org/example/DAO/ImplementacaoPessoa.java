@@ -3,10 +3,7 @@ package org.example.DAO;
 import org.example.Conexao.Conexao;
 import org.example.Model.Pessoa;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,5 +74,50 @@ public class ImplementacaoPessoa implements DAO<Pessoa>{
             System.out.println(e.getMessage());
         }
         return id;
+    }
+
+    @Override
+    public void removerDados(Pessoa o) {
+        String sql = "Delete from T_HCFMUSP_PESSOA where id_pessoa = ?";
+
+        try (Connection con = Conexao.recuperaConexao()) {
+            con.setAutoCommit(false);
+
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                st.setInt(1, o.getId_pessoa());
+                int linhasAfetadas = st.executeUpdate();
+                if (linhasAfetadas > 0) {
+                    con.commit();
+                    System.out.println("Pessoa apagada do BD!");
+                } else {
+                    con.rollback();
+                    System.out.println("Não foi apagada");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void atualizarDados(Pessoa o, String coluna, String dado) {
+        String sql = "Update T_HCFMUSP_PESSOA set " + coluna + " = ? where id_pessoa = ?";
+
+        try (Connection con = Conexao.recuperaConexao()) {
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setString(1, dado);
+            st.setInt(2, o.getId_pessoa());
+
+            int linhas = st.executeUpdate();
+
+            if (linhas > 0) {
+                System.out.println("Dado atualizado!");
+            } else {
+                System.out.println("Não atualizou!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

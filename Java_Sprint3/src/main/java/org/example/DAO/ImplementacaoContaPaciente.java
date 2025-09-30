@@ -3,18 +3,39 @@ package org.example.DAO;
 import org.example.Conexao.Conexao;
 import org.example.Model.Paciente.ContaPaciente;
 import org.example.Model.Paciente.Paciente;
+import org.example.Model.Pessoa;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImplementacaoContaPaciente implements DAO<ContaPaciente>{
 
     @Override
     public List<ContaPaciente> recuperarDadosTodos() {
-        return List.of();
+        List<ContaPaciente> l = new ArrayList<ContaPaciente>();
+        String sql = "select * from T_HCFMUSP_LOGIN_PACIENTE";
+        try (
+                Connection con = Conexao.recuperaConexao();
+                PreparedStatement st = con.prepareStatement(sql);
+                ResultSet rs = st.executeQuery();
+
+        ) {
+            ImplementacaoPaciente p = new ImplementacaoPaciente();
+
+            List<Paciente> pacientes = p.recuperarDadosTodos();
+
+            while(rs.next()) {
+                for (Paciente paciente : pacientes){
+                    if (paciente.getId_paciente() == rs.getInt(4)){
+                        l.add(new ContaPaciente(rs.getInt(1), paciente, rs.getString(2), rs.getString(3)));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return l;
     }
 
     @Override
@@ -89,5 +110,50 @@ public class ImplementacaoContaPaciente implements DAO<ContaPaciente>{
             System.out.println(e.getMessage());
         }
         return c;
+    }
+
+    @Override
+    public void removerDados(ContaPaciente o) {
+        String sql = "Delete from T_HCFMUSP_LOGIN_PACIENTE where id_paciente = ?";
+
+        try (Connection con = Conexao.recuperaConexao()) {
+            con.setAutoCommit(false);
+
+            try (
+                    PreparedStatement st = con.prepareStatement(sql)) {
+                st.setInt(1, o.getPaciente().getId_paciente());
+                int linhasAfetadas = st.executeUpdate();
+                if (linhasAfetadas > 0) {
+                    con.commit();
+                    System.out.println("Conta apagada do BD!");
+                } else {
+                    con.rollback();
+                    System.out.println("Não foi apagado");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void atualizarDados(ContaPaciente o, String coluna, String dado) {
+        String sql = "Update T_HCFMUSP_LOGIN_PACIENTE set " + coluna + " = ? where id_login_paciente = ?";
+
+        try (
+            Connection con = Conexao.recuperaConexao();
+            PreparedStatement st = con.prepareStatement(sql);)
+        {
+            st.setString(1, dado);
+            st.setInt(2, o.getId_conta());
+
+            if (st.executeUpdate() > 0) {
+                System.out.println("Dado atualizado!");
+            } else {
+                System.out.println("Não atualizou!");
+            }
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

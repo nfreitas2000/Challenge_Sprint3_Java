@@ -23,12 +23,11 @@ public class ImplementacaoFuncionario implements DAO<Funcionario>{
 
         ) {
             ImplementacaoPessoa p = new ImplementacaoPessoa();
-
             List<Pessoa> pessoas = p.recuperarDadosTodos();
 
             while(rs.next()) {
                 for (Pessoa pessoa : pessoas){
-                    if (pessoa.getId_pessoa() == rs.getInt(6)){
+                    if (pessoa.getId_pessoa() == rs.getInt(5)){
                         l.add(new Funcionario(rs.getInt(1), pessoa, rs.getString(2), rs.getString(3), rs.getString(4)));
                     }
                 }
@@ -62,7 +61,7 @@ public class ImplementacaoFuncionario implements DAO<Funcionario>{
     }
 
     @Override
-    public int recuperaId(Funcionario o) throws SQLException {
+    public int recuperaId(Funcionario o){
         int id = 0;
         String sql = "select id_funcionario from T_HCFMUSP_FUNCIONARIO where id_pessoa = ?";
         try (
@@ -73,12 +72,22 @@ public class ImplementacaoFuncionario implements DAO<Funcionario>{
 
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    id = rs.getInt("id_paciente");
+                    id = rs.getInt("id_funcionario");
                 }
             };
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return id;
+    }
+
+    @Override
+    public void removerDados(Funcionario o) {
+
+    }
+
+    @Override
+    public void atualizarDados(Funcionario o, String coluna, String dado) {
+
     }
 }

@@ -110,19 +110,164 @@ public class Pessoa {
 
     public void cadastrarPessoa(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Digite seu nome: ");
-        setNome(sc.nextLine());
-        System.out.println("Digite seu cpf: ");
-        setCpf(sc.nextLine());
-        System.out.println("Digite seu rg: ");
-        setRg(sc.nextLine());
+        while (true) {
+            System.out.println("Digite seu nome: ");
+            String entradaNome = sc.nextLine();
+            if (entradaNome.isEmpty()){
+                System.out.println("Insira um nome!");
+                continue;
+            }
+            setNome(entradaNome);
+            break;
+        }
+        while (true) {
+            System.out.println("Digite seu cpf (somente números): ");
+            String entradacpf = sc.nextLine();
+            if (entradacpf.length() == 11) {
+                entradacpf = entradacpf.substring(0, 3) + "." + entradacpf.substring(3, 6) + "." + entradacpf.substring(6, 9) + "-" + entradacpf.substring(9);
+                setCpf(entradacpf);
+            } else {
+                System.out.println("O CPF deve ter 11 digitos!");
+                continue;
+            }
+            break;
+        }
+        while (true) {
+            System.out.println("Digite seu rg (somenente números): ");
+            String entradaRg = sc.nextLine();
+            if (entradaRg.length() == 9){
+                entradaRg = entradaRg.substring(0, 2) + "." + entradaRg.substring(2, 5) + "." + entradaRg.substring(5, 8) + "-" + entradaRg.substring(8);
+                setRg(entradaRg);
+            } else {
+                System.out.println("O RG deve ter 9 digitos!");
+                continue;
+            }
+            break;
+        }
         System.out.println("Digite sua data de nascimento (DD/MM/YYYY): ");
         setDt_nascimento(sc.nextLine());
-        System.out.println("Digite seu sexo ('M','F','I'): ");
-        setSx_pessoa(sc.nextLine().toUpperCase());
-        System.out.println("Digite seu estado civil ('solteiro','casado','divorciado','viúvo): ");
-        setEstado_civil(sc.nextLine().toLowerCase());
-        System.out.println("Digite sua escolaridade:");
-        setEscolaridade(sc.nextLine());
+        while (true) {
+            System.out.println("Selecione seu sexo: ");
+            System.out.println("1 - Masculino");
+            System.out.println("2 - Feminino");
+            System.out.println("3 - Indefinido");
+            System.out.print("Digite: ");
+            try {
+                switch (Integer.parseInt(sc.nextLine())) {
+                    case 1:
+                        setSx_pessoa("M");
+                        break;
+                    case 2:
+                        setSx_pessoa("F");
+                        break;
+                    case 3:
+                        setSx_pessoa("I");
+                        break;
+                    default:
+                        System.out.println("Entrada inválida!");
+                        continue;
+                }
+            } catch (NumberFormatException e){
+                System.out.println("Entrada inválida!");
+                continue;
+            }
+            break;
+        }
+        while (true) {
+            System.out.println("Selecione seu estado civil: ");
+            System.out.println("1 - Solteiro(a)");
+            System.out.println("2 - Casado(a)");
+            System.out.println("3 - Divorciado(a)");
+            System.out.println("4 - Viúvo(a)");
+            System.out.print("Digite: ");
+            try {
+                switch (Integer.parseInt(sc.nextLine())) {
+                    case 1:
+                        setEstado_civil("solteiro");
+                        break;
+                    case 2:
+                        setEstado_civil("casado");
+                        break;
+                    case 3:
+                        setEstado_civil("divorciado");
+                        break;
+                    case 4:
+                        setEstado_civil("viúvo");
+                        break;
+                    default:
+                        System.out.println("Entrada inválida!");
+                        continue;
+                }
+            } catch (NumberFormatException e){
+                System.out.println("Entrada inválida!");
+                continue;
+            }
+            break;
+        }
+        while (true) {
+            System.out.println("Selecione sua escolaridade: ");
+            System.out.println("1 - Ensino Fundamental Incompleto");
+            System.out.println("2 - Ensino Fundamental Cursando");
+            System.out.println("3 - Ensino Fundamental Concluído");
+            System.out.println("4 - Ensino Médio Incompleto");
+            System.out.println("5 - Ensino Médio Cursando");
+            System.out.println("6 - Ensino Médio Concluído");
+            System.out.println("7 - Ensino Superior Incompleto");
+            System.out.println("8 - Ensino Superior Cursando");
+            System.out.println("9 - Ensino Superior Concluído");
+            System.out.println("10 - Pós-Graduação Incompleto");
+            System.out.println("11 - Pós-Graduação Cursando");
+            System.out.println("12 - Pós-Graduação Concluído");
+            System.out.print("Digite: ");
+
+            try {
+                switch (Integer.parseInt(sc.nextLine())) {
+                    case 1:
+                        setEscolaridade("Ensino Fundamental Incompleto");
+                        break;
+                    case 2:
+                        setEscolaridade("Ensino Fundamental Cursando");
+                        break;
+                    case 3:
+                        setEscolaridade("Ensino Fundamental Concluído");
+                        break;
+                    case 4:
+                        setEscolaridade("Ensino Médio Incompleto");
+                        break;
+                    case 5:
+                        setEscolaridade("Ensino Médio Cursando");
+                        break;
+                    case 6:
+                        setEscolaridade("Ensino Médio Concluído");
+                        break;
+                    case 7:
+                        setEscolaridade("Ensino Superior Incompleto");
+                        break;
+                    case 8:
+                        setEscolaridade("Ensino Superior Cursando");
+                        break;
+                    case 9:
+                        setEscolaridade("Ensino Superior Concluído");
+                        break;
+                    case 10:
+                        setEscolaridade("Pós-Graduação Incompleto");
+                        break;
+                    case 11:
+                        setEscolaridade("Pós-Graduação Cursando");
+                        break;
+                    case 12:
+                        setEscolaridade("Pós-Graduação Concluído");
+                        break;
+                    default:
+                        System.out.println("Entrada inválida!");
+                        continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida!");
+                continue;
+            }
+            break;
+        }
+
     }
 }
